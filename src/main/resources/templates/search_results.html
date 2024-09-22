@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<div class="container mt-4">
+    <!-- Home and Cart Buttons -->
+    <div class="d-flex justify-content-between mb-3">
+        <a href="/restaurants" class="btn btn-outline-primary">Home</a>
+        <a href="/cart/view" class="btn btn-outline-success">View Cart</a>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <form th:action="@{/search/menu}" method="get" class="d-flex">
+                <div class="input-group">
+                    <input type="text" name="keyword" class="form-control" placeholder="Search for items..."
+                           th:value="${keyword}" aria-label="Search" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="submit">Search</button>
+                    </div>
+                </div>
+                <!-- Back Button -->
+                <button class="btn btn-outline-secondary ml-2" type="button" onclick="history.back()">Back</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Display error message if no items are found -->
+    <div th:if="${message}" class="alert alert-warning mt-4">
+        <p th:text="${message}"></p>
+    </div>
+
+    <!-- Search results header with filter dropdown -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Restaurants offering "[[${keyword}]]"</h2>
+        <div class="form-group">
+            <label for="filter" class="sr-only">Sort By:</label>
+            <select id="filter" class="form-control" onchange="applyFilter()">
+                <option value="rating" th:selected="${sort == 'rating'}">Rating: High to Low</option>
+                <option value="price" th:selected="${sort == 'price'}">Price: Low to High</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Display search results if restaurants are found -->
+    <div th:if="${restaurants}" class="search-result mt-4">
+        <div class="row">
+            <div th:each="restaurant : ${restaurants}" class="col-md-4 mb-4">
+                <div class="card restaurant-card shadow-sm">
+                    <div class="card-body d-flex justify-content-between align-items-start">
+                        <div class="restaurant-details">
+                            <h4 class="card-title" th:text="${restaurant.name}">Restaurant Name</h4>
+                            <p class="card-text" th:text="'Cuisine: ' + ${restaurant.cuisineType}">Cuisine</p>
+                            <p class="card-text" th:text="'Address: ' + ${restaurant.address}">Address</p>
+
+                            <!-- Display menu items and prices offered by the restaurant -->
+                            <div th:if="${restaurant.menuItems}">
+                                <div th:each="menuItem : ${restaurant.menuItems}">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <div>
+                                            <span th:text="${menuItem.name}" class="menu-item-name">Menu Item</span> -
+                                            <span th:text="'$' + ${menuItem.price}" class="text-success font-weight-bold menu-item-price">Price</span>
+                                        </div>
+                                        <!-- Form to add item to the cart -->
+                                        <form th:action="@{/cart/add}" method="post" style="margin: 0;">
+                                            <input type="hidden" name="menuItemId" th:value="${menuItem.id}"/>
+                                            <input type="hidden" name="name" th:value="${menuItem.name}"/>
+                                            <input type="hidden" name="price" th:value="${menuItem.price}"/>
+                                            <input type="hidden" name="restaurantId" th:value="${restaurant.id}"/>
+                                            <input type="hidden" name="quantity" value="1"/>
+                                            <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Button to view full restaurant menu -->
+                            <a th:href="@{'/restaurants/' + ${restaurant.id} + '/menu/view-menu'}" class="btn btn-info btn-sm mt-2">View Full Menu</a>
+
+                            <div th:if="${#lists.isEmpty(restaurant.menuItems)}">
+                                <p class="text-muted">No menu items available for this restaurant.</p>
+                            </div>
+                        </div>
+                        <!-- Display the restaurant's rating on the right (dynamically) -->
+                        <div class="restaurant-rating">
+                            <span class="badge badge-warning text-white p-2">
+                                <i class="fa fa-star"></i>
+                                <span th:text="${restaurant.rating}">0.0</span> <!-- Dynamic Rating -->
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript function to apply filter -->
+<script type="text/javascript">
+    function applyFilter() {
+        let filterValue = document.getElementById('filter').value;
+        window.location.href = "?keyword=[[${keyword}]]&sort=" + filterValue;
+    }
+</script>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

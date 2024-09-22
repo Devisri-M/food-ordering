@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Success</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Order Placed Successfully!</h1>
+    <p th:text="${message}"></p>
+    <a href="/restaurants" class="btn btn-primary">Go Back to Restaurants</a>
+</div>
+</body>
+</html>

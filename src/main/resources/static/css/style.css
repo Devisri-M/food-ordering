@@ -1,0 +1,290 @@
+.navbar {
+  padding: 0 10px;
+}
+
+*.icon-dark {
+  color: grey;
+}
+
+.message {
+  position: absolute;
+  top: 40px;
+  right:5px;
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  text-indent: 25px;
+  border: 2px solid #d6d4d4;
+}
+
+.search input:focus {
+  box-shadow: none;
+  border: 1px solid grey;
+}
+
+.search .fa-search {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+}
+
+.search button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 80px;
+  background: grey;
+}
+
+/* New styles for the restaurant search results */
+.restaurant-card {
+  border: 1px solid #d6d4d4;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.restaurant-card:hover {
+  transform: scale(1.02);
+}
+
+.card-title {
+  font-size: 18px;
+  color: #333;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #555;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.mt-4 {
+  margin-top: 24px;
+}
+
+.mb-4 {
+  margin-bottom: 24px;
+}
+
+.card {
+  border-radius: 15px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.restaurant-details {
+  flex-grow: 1;
+}
+
+.restaurant-rating {
+  text-align: right;
+}
+
+.restaurant-rating .badge {
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #ffc107;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.text-success {
+  color: #28a745 !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+/* Existing styles */
+/* ... other existing styles ... */
+
+.navbar {
+  padding: 0 10px;
+}
+
+*.icon-dark {
+  color: grey;
+}
+
+.message {
+  position: absolute;
+  top: 40px;
+  right: 5px;
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  text-indent: 25px;
+  border: 2px solid #d6d4d4;
+}
+
+.search input:focus {
+  box-shadow: none;
+  border: 1px solid grey;
+}
+
+.search .fa-search {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+}
+
+.search button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 80px;
+  background: grey;
+}
+
+/* New styles for search results page */
+
+/* Align filter dropdown to the right */
+.d-flex.justify-content-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group select {
+  width: auto;
+  padding: 10px;
+  border-radius: 25px;
+  border: 1px solid #ced4da;
+}
+
+/* Search bar customization */
+.search-bar input {
+  padding: 10px;
+  width: 100%;
+  border-radius: 25px;
+  border: 1px solid #ced4da;
+  margin-bottom: 15px;
+}
+
+/* Card hover effect for restaurant cards */
+.restaurant-card {
+  border: 1px solid #d6d4d4;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.restaurant-card:hover {
+  transform: scale(1.02);
+}
+
+.card-title {
+  font-size: 18px;
+  color: #333;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #555;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.mt-4 {
+  margin-top: 24px;
+}
+
+.mb-4 {
+  margin-bottom: 24px;
+}
+
+.card {
+  border-radius: 15px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.restaurant-details {
+  flex-grow: 1;
+}
+
+.restaurant-rating {
+  text-align: right;
+}
+
+.restaurant-rating .badge {
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #ffc107;
+  color: #fff;
+  border-radius: 8px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.text-success {
+  color: #28a745 !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.container {
+  max-width: 900px;
+}
+
+.btn-outline-primary {
+  margin-bottom: 15px;
+}
+
+.input-group {
+  flex-grow: 1;
+}
+
+.form-group select {
+  min-width: 180px;
+  margin-left: 10px;
+}
+
+.menu-item-name {
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+.menu-item-price {
+  color: #28a745;
+  font-weight: bold;
+}

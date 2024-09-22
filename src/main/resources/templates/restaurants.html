@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
+  <title>Restaurants</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container-fluid" style="max-width: 2500px; margin: 0 auto;">
+  <div class="d-flex justify-content-between mb-3">
+    <h2 class="text-center">Restaurants</h2>
+    <!-- Add the View Cart button next to the header -->
+    <a href="/cart/view" class="btn btn-outline-success">View Cart</a>
+  </div>
+
+  <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+       role="alert">
+    [[${message}]]
+    <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <!-- Search by restaurant name -->
+  <div class="my-3">
+    <form th:action="@{/restaurants}">
+      <div class="row d-flex">
+        <div class="col-md-6 mt-2">
+          <div class="search">
+            <i class="fa fa-search"></i>
+            <input id="keyword" type="search" name="keyword" th:value="${keyword}" required class="form-control"
+                   placeholder="Search by restaurant name">
+            <button type="submit" class="btn btn-secondary">Search</button>
+          </div>
+        </div>
+        <div class="col-md-6 mt-2">
+          <button id="btnClear" class="btn btn-info">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <form th:action="@{/search/menu}" method="get">
+    <div class="row d-flex">
+      <div class="col-md-6 mt-2">
+        <div class="search">
+          <i class="fa fa-search"></i>
+          <input id="keyword1" type="search" name="keyword" class="form-control" placeholder="Search by dish name">
+          <button type="submit" class="btn btn-secondary">Search</button>
+        </div>
+      </div>
+      <div class="col-md-6 mt-2">
+        <button id="btnClear" class="btn btn-info">Clear</button>
+      </div>
+    </div>
+  </form>
+
+  <div th:if="${restaurants.size() > 0}">
+    <table class="table table-hover table-responsive-xl">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">City</th>
+        <th scope="col">State</th>
+        <th scope="col">Zip Code</th>
+        <th scope="col">Cuisine Type</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Opening Hours</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Website</th>
+        <th scope="col">Open</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="restaurant : ${restaurants}">
+        <th scope="row">[[${restaurant.id}]]</th>
+        <td>[[${restaurant.name}]]</td>
+        <td>[[${restaurant.address}]]</td>
+        <td>[[${restaurant.city}]]</td>
+        <td>[[${restaurant.state}]]</td>
+        <td>[[${restaurant.zipCode}]]</td>
+        <td>[[${restaurant.cuisineType}]]</td>
+        <td>[[${restaurant.rating}]]</td>
+        <td>[[${restaurant.openingHours}]]</td>
+        <td>[[${restaurant.phoneNumber}]]</td>
+        <td>[[${restaurant.website}]]</td>
+        <td>[[${restaurant.isOpen}]]</td>
+        <td>
+          <!-- Edit Restaurant Details Button -->
+          <a th:href="@{'/restaurants/' + ${restaurant.id}}" title="Edit Restaurant" class="btn btn-primary btn-sm">Edit Restaurant</a>
+
+          <!-- Manage Menu Button -->
+          <a th:href="@{'/restaurants/' + ${restaurant.id} + '/menu'}" title="Manage Menu for this restaurant" class="btn btn-info btn-sm">Manage Menu</a>
+
+          <!-- Open/Close Toggle -->
+          <a th:if="${restaurant.isOpen == true}" class="fa-regular fa-square-check"
+             th:href="@{'/restaurants/' + ${restaurant.id} + '/isOpen/false'}" title="Disable this restaurant"></a>
+          <a th:if="${restaurant.isOpen == false}" class="fa-regular fa-square icon-dark"
+             th:href="@{'/restaurants/' + ${restaurant.id} + '/isOpen/true'}" title="Enable this restaurant"></a>
+
+          <!-- Delete Restaurant Button -->
+          <a th:href="@{'/restaurants/delete/' + ${restaurant.id}}" th:restaurantsName="${restaurant.name}" id="btnDelete"
+             title="Delete this restaurant" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="" th:unless="${restaurants.size() > 0}">
+    <span>No restaurants found!</span>
+  </div>
+</div>
+
+<div class="modal fade text-center" id="confirmModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <span id="confirmText"></span>
+      </div>
+
+      <div class="modal-footer">
+        <a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(".btn-delete").on("click", function (e) {
+      e.preventDefault();
+      link = $(this);
+
+      restaurantTitle = link.attr("restaurantTitle");
+      $("#yesBtn").attr("href", link.attr("href"));
+      $("#confirmText").html("Do you want to delete the Restaurant \<strong\>" + restaurantTitle + "\<\/strong\>?");
+      $("#confirmModal").modal();
+    });
+
+    $("#btnClear").on("click", function (e) {
+      e.preventDefault();
+      $("#keyword").text("");
+      window.location = "[[@{/restaurants}]]";
+    });
+  });
+</script>
+
+</body>
+</html>

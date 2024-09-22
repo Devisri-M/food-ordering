@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<div class="container mt-4">
+    <!-- Home Button -->
+    <div class="d-flex justify-content-between mb-3">
+        <a href="/restaurants" class="btn btn-outline-primary">Home</a>
+        <a href="/cart/view" class="btn btn-outline-success">View Cart</a>
+    </div>
+
+    <!-- Restaurant Info -->
+    <h2 th:text="${restaurant.name}">Restaurant Name</h2>
+    <p th:text="'Cuisine: ' + ${restaurant.cuisineType}">Cuisine</p>
+    <p th:text="'Address: ' + ${restaurant.address}">Address</p>
+
+    <!-- Display error message if menu items not available -->
+    <div th:if="${message}" class="alert alert-warning mt-4">
+        <p th:text="${message}"></p>
+    </div>
+
+    <!-- Display menu items if available -->
+    <div th:if="${menuItems}" class="mt-4">
+        <h3>Menu</h3>
+        <div class="row">
+            <div th:each="menuItem : ${menuItems}" class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${menuItem.name}">Item Name</h5>
+                        <p class="card-text" th:text="${menuItem.description}">Item Description</p>
+                        <p class="card-text text-success" th:text="'$' + ${menuItem.price}">Price</p>
+                        <form th:action="@{/cart/add}" method="post">
+                            <input type="hidden" name="menuItemId" th:value="${menuItem.id}" />
+                            <input type="hidden" name="name" th:value="${menuItem.name}" />
+                            <input type="hidden" name="price" th:value="${menuItem.price}" />
+                            <input type="hidden" name="restaurantId" th:value="${restaurant.id}" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(menuItems)}" class="alert alert-info">
+        No menu items available for this restaurant.
+    </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
