@@ -3,6 +3,8 @@ package org.foodorder.service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Future;
+
 import org.foodorder.entity.OrderEntity;
 import org.foodorder.entity.OrderItemEntity;
 import org.foodorder.model.CartItem;
@@ -74,4 +76,14 @@ public interface OrderService {
      * @param groupedItems Items grouped by their respective restaurants.
      */
     OrderEntity saveCustomerOrdersToDB(List<OrderItemRequest> orderItemRequests, Map<Long, List<OrderItemRequest>> groupedItems, Long customerId);
+
+    /**
+     * Places an order by grouping items by restaurant and submitting each restaurant's order processing to an ExecutorService.
+     *
+     * @param items      the items in the order
+     * @param customerId the ID of the customer placing the order
+     * @param strategy   the strategy to select restaurants (e.g., "lowest cost", "highest rating")
+     * @return a Future representing the result of the order placement
+     */
+    Future<OrderEntity> placeOrderUponCustomerRequest(List<OrderItemRequest> items, Long customerId, String strategy);
 }

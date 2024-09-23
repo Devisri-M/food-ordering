@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -179,6 +181,43 @@ public class OrderController {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error occurred while placing the order: {0} {1}", new Object[]{e.getMessage(), e});
             return ResponseEntity.status(500).body(Collections.singletonMap("message", "Failed to place order: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * Endpoint to place an order by customer request. Orders are processed asynchronously to handle concurrency.
+     *
+     * @param orderRequest the order request containing items, customer ID, and strategy
+     * @return a response entity containing order placement status
+     */
+    @PostMapping("/placeOrderUponCustomerRequest")
+    public ResponseEntity<?> placeOrderUponCustomerRequestNew(@RequestBody OrderRequest orderRequest) {
+        try {
+            // Validate input
+            if (orderRequest.getItems().isEmpty()) {
+                return ResponseEntity.badRequest().body("No items provided for order placement.");
+            }
+
+            Long customerId = orderRequest.getCustomerId();
+            String strategy = orderRequest.getStrategy();
+            if (strategy == null || strategy.isEmpty()) {
+                strategy = "rating";  // Default strategy
+            }
+
+            // Trigger order placement asynchronously
+            Future<OrderEntity> futureOrder = orderService.placeOrderUponCustomerRequest(orderRequest.getItems(), customerId, strategy);
+
+            // Optionally, block and wait for the order completion (e.g., use futureOrder.get() for blocking call)
+            OrderEntity order = futureOrder.get();  // Blocking call to wait for order to complete, can be made async if needed
+
+            return ResponseEntity.ok(Map.of("message", "Order placed successfully!", "orderId", order.getId()));
+        } catch (ExecutionException | InterruptedException e) {
+            Thread.currentThread().interrupt(); // Preserve interrupt status
+            LOGGER.log(Level.SEVERE, "Failed to place order", e);
+            return ResponseEntity.status(500).body(Map.of("message", "Failed to place order: " + e.getMessage()));
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error occurred while placing the order", e);
+            return ResponseEntity.status(500).body(Map.of("message", "Failed to place order: " + e.getMessage()));
         }
     }
 

@@ -11,13 +11,13 @@ VALUES
     ('Spicy Spoon', '456 Flavor Avenue', 'Los Angeles', 'CA', '90001', 'Indian, Thai', 4.5, '10:00 AM - 11:00 PM', '987-654-3210', 'http://spicyspoon.com', FALSE, 1),
     ('Global Gourmet', '789 World Drive', 'Austin', 'TX', '73301', 'Mexican, American', 4.6, '10:00 AM - 9:00 PM', '123-789-4560', 'http://globalgourmet.com', TRUE, 1),
     ('Sushi & Grill Fusion', '987 Ocean Drive', 'Miami', 'FL', '33101', 'Japanese, Korean', 4.8, '11:00 AM - 10:00 PM', '321-654-9870', 'http://sushigrillfusion.com', TRUE, 10),
-    ('Vegan & Raw Delight', '321 Green Blvd', 'Portland', 'OR', '97035', 'Vegan, Raw', 4.3, '8:00 AM - 8:00 PM', '321-456-7891', 'http://veganrawdelight.com', TRUE, 25),
-    ('Pasta & Pizza Palace', '654 Noodle Lane', 'Chicago', 'IL', '60601', 'Italian, Pizza', 4.9, '12:00 PM - 11:00 PM', '654-789-3211', 'http://pastapizzapalace.com', TRUE, 60),
-    ('Taco & Burrito Town', '876 Fiesta Avenue', 'Phoenix', 'AZ', '85001', 'Mexican, Tex-Mex', 4.4, '9:00 AM - 9:00 PM', '654-321-7890', 'http://tacoburritotown.com', FALSE, 35),
-    ('Spice & Curry Corner', '567 Spice Street', 'Seattle', 'WA', '98101', 'Indian, Middle Eastern', 4.7, '10:00 AM - 11:00 PM', '987-123-6540', 'http://spicecurrycorner.com', TRUE, 50),
-    ('Pizza & Pasta Paradise', '123 Slice Road', 'New York', 'NY', '10001', 'Italian, Pizza', 4.6, '11:00 AM - 12:00 AM', '123-654-9871', 'http://pizzapastaparadise.com', TRUE, 70),
-    ('BBQ & Grill Haven', '321 Smoke Blvd', 'Memphis', 'TN', '37501', 'BBQ, American', 4.8, '10:00 AM - 10:00 PM', '654-987-1232', 'http://bbqgrillhaven.com', TRUE, 55),
-    ('Dim Sum & Sushi Dynasty', '432 Bamboo Way', 'San Francisco', 'CA', '94110', 'Chinese, Japanese', 4.5, '10:30 AM - 10:30 PM', '654-123-7891', 'http://dimsumsushidynasty.com', TRUE, 65);
+    ('Vegan & Raw Delight', '321 Green Blvd', 'Portland', 'OR', '97035', 'Vegan, Raw', 4.3, '8:00 AM - 8:00 PM', '321-456-7891', 'http://veganrawdelight.com', TRUE, 15),
+    ('Pasta & Pizza Palace', '654 Noodle Lane', 'Chicago', 'IL', '60601', 'Italian, Pizza', 4.9, '12:00 PM - 11:00 PM', '654-789-3211', 'http://pastapizzapalace.com', TRUE, 10),
+    ('Taco & Burrito Town', '876 Fiesta Avenue', 'Phoenix', 'AZ', '85001', 'Mexican, Tex-Mex', 4.4, '9:00 AM - 9:00 PM', '654-321-7890', 'http://tacoburritotown.com', FALSE, 15),
+    ('Spice & Curry Corner', '567 Spice Street', 'Seattle', 'WA', '98101', 'Indian, Middle Eastern', 4.7, '10:00 AM - 11:00 PM', '987-123-6540', 'http://spicecurrycorner.com', TRUE, 10),
+    ('Pizza & Pasta Paradise', '123 Slice Road', 'New York', 'NY', '10001', 'Italian, Pizza', 4.6, '11:00 AM - 12:00 AM', '123-654-9871', 'http://pizzapastaparadise.com', TRUE, 10),
+    ('BBQ & Grill Haven', '321 Smoke Blvd', 'Memphis', 'TN', '37501', 'BBQ, American', 4.8, '10:00 AM - 10:00 PM', '654-987-1232', 'http://bbqgrillhaven.com', TRUE, 10),
+    ('Dim Sum & Sushi Dynasty', '432 Bamboo Way', 'San Francisco', 'CA', '94110', 'Chinese, Japanese', 4.5, '10:30 AM - 10:30 PM', '654-123-7891', 'http://dimsumsushidynasty.com', TRUE, 10);
 
 -- Menu items for The Fancy Fork
 INSERT INTO menu_item (restaurant_id, name, description, price, available, created_at, updated_at)
