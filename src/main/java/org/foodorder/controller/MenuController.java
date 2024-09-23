@@ -28,6 +28,11 @@ import org.springframework.web.bind.annotation.*;
 public class MenuController {
 
     private static final Logger LOGGER = Logger.getLogger(MenuController.class.getName());
+    private static final String ERROR = "error";
+    private static final String RESTUARENT_MENU = "restaurant_menu";
+    private static final String MENU_FORM = "menu_form";
+    private static final String REDIRECT_RESTUARENTS = "redirect:/restaurants/";
+    private static final String MENU = "/menu";
 
     @Autowired
     private MenuService menuService;
@@ -154,11 +159,11 @@ public class MenuController {
 
             model.addAttribute("restaurant", restaurant);
             model.addAttribute("menuItem", new MenuItemEntity()); // Add new empty menu item object
-            return "menu_form";  // Thymeleaf view
+            return MENU_FORM;  // Thymeleaf view
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error fetching restaurant with ID: " + restaurantId, e);
             model.addAttribute("message", "Unable to load restaurant details.");
-            return "error"; // Redirect to an error page in case of failure
+            return ERROR; // Redirect to an error page in case of failure
         }
     }
 
@@ -181,11 +186,11 @@ public class MenuController {
 
             model.addAttribute("restaurant", restaurant);
             model.addAttribute("menuItem", menuItem);  // Add the menu item to be edited
-            return "menu_form";  // Thymeleaf view for editing
+            return MENU_FORM;  // Thymeleaf view for editing
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error fetching restaurant or menu item with IDs: " + restaurantId + ", " + menuItemId, e);
             model.addAttribute("message", "Unable to load restaurant or menu item details.");
-            return "error";  // Redirect to an error page in case of failure
+            return ERROR;  // Redirect to an error page in case of failure
         }
     }
 
@@ -208,10 +213,10 @@ public class MenuController {
                 menuService.addMenuItem(restaurantId, menuItem);
                 LOGGER.info("Created new menu item for restaurant ID: " + restaurantId);
             }
-            return "redirect:/restaurants/" + restaurantId + "/menu";  // Redirect to the menu list after saving
+            return REDIRECT_RESTUARENTS + restaurantId + MENU;  // Redirect to the menu list after saving
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error saving menu item for restaurant ID: " + restaurantId, e);
-            return "error";  // Redirect to an error page in case of failure
+            return ERROR;  // Redirect to an error page in case of failure
         }
     }
 
@@ -227,10 +232,10 @@ public class MenuController {
         try {
             menuService.deleteMenuItem(restaurantId, menuItemId);
             LOGGER.info("Deleted menu item ID: " + menuItemId + " for restaurant ID: " + restaurantId);
-            return "redirect:/restaurants/" + restaurantId + "/menu";  // Redirect to the menu page after deletion
+            return REDIRECT_RESTUARENTS + restaurantId + MENU;  // Redirect to the menu page after deletion
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error deleting menu item ID: " + menuItemId + " for restaurant ID: " + restaurantId, e);
-            return "error";  // Redirect to an error page in case of failure
+            return ERROR;  // Redirect to an error page in case of failure
         }
     }
 
@@ -252,11 +257,11 @@ public class MenuController {
             model.addAttribute("restaurant", restaurant);
             model.addAttribute("menuItems", menuItems);  // List of menu items to display
             model.addAttribute("menuItem", new MenuItemEntity());  // Add a blank menu item object to the model
-            return "menu_form";  // Thymeleaf view for showing the menu
+            return MENU_FORM;  // Thymeleaf view for showing the menu
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error fetching menu items for restaurant ID: " + restaurantId, e);
             model.addAttribute("message", "Unable to load menu items.");
-            return "error";  // Redirect to an error page in case of failure
+            return ERROR;  // Redirect to an error page in case of failure
         }
     }
 
@@ -279,11 +284,11 @@ public class MenuController {
             model.addAttribute("restaurant", restaurant);
             model.addAttribute("menuItems", menuItems);
 
-            return "restaurant_menu"; // The new Thymeleaf template for viewing menu and adding to cart
+            return RESTUARENT_MENU; // The new Thymeleaf template for viewing menu and adding to cart
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error while fetching menu items for restaurant ID: " + restaurantId, e);
             model.addAttribute("message", "Unable to fetch menu items.");
-            return "error"; // Return an error page if something goes wrong
+            return ERROR; // Return an error page if something goes wrong
         }
     }
 }

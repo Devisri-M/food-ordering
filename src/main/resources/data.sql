@@ -85,8 +85,8 @@ VALUES
     (11, 'Pork Dumplings', 'Steamed dumplings filled with pork.', 7.99, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     (11, 'Sushi Sashimi Platter', 'Assorted raw fish slices.', 19.99, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO customers (name, email, phone_number, address)
+INSERT INTO customers (id, name, email, password, phone_number, address)
 VALUES
-    ('Alice Johnson', 'alice.johnson@example.com', '555-1234', '123 Maple Street, Springfield, IL'),
-    ('Bob Smith', 'bob.smith@example.com', '555-5678', '456 Oak Avenue, Denver, CO'),
-    ('Charlie Brown', 'charlie.brown@example.com', '555-9876', '789 Pine Road, Austin, TX');
+    (123, 'Alice Johnson', 'alice.johnson@example.com', 'hashed_password_1', '555-1234', '123 Maple Street, Springfield, IL'),
+    (456, 'Bob Smith', 'bob.smith@example.com', 'hashed_password_2', '555-5678', '456 Oak Avenue, Denver, CO'),
+    (789, 'Charlie Brown', 'charlie.brown@example.com', 'hashed_password_3', '555-9876', '789 Pine Road, Austin, TX');

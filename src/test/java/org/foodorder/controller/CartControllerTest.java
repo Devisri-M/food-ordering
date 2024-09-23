@@ -94,10 +94,10 @@ class CartControllerTest {
         when(cartService.calculateTotal()).thenReturn(new BigDecimal("25.98"));
 
         mockMvc.perform(get("/cart/view"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("cart_view"))
-                .andExpect(model().attributeExists("cartItems"))
-                .andExpect(model().attributeExists("total"));
+                .andExpect(status().isOk())  // Expect success status
+                .andExpect(view().name("cart_view"))  // Expect the correct view name
+                .andExpect(model().attributeExists("cartItems"))  // Ensure 'cartItems' are in the model
+                .andExpect(model().attributeExists("total"));  // Ensure 'total' is in the model
 
         verify(cartService, times(1)).getCartItems();
         verify(cartService, times(1)).calculateTotal();

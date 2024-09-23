@@ -21,6 +21,10 @@ import java.util.List;
 public class CartController {
 
     private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+    private static final String CART_VIEW = "cart_view";
+    private static final String REDIRECT_CART_VIEW = "redirect:/cart/view";
+    private static final String REDIRECT_SEARCH_MENU = "redirect:/search/menu";
+    private static final String REDIRECT_ERROR_VIEW = "redirect:/cart/view?error=Unable to remove item";
 
     @Autowired
     private CartService cartService;
@@ -48,11 +52,11 @@ public class CartController {
             logger.info("Adding item {} with ID {} from restaurant ID {} to the cart, quantity: {}", name, menuItemId, restaurantId, quantity);
             cartService.addToCart(menuItemId, name, price, quantity, restaurantId);
             model.addAttribute("message", "Item added to cart successfully!");
-            return "redirect:/cart/view"; // Redirect to the cart view page after adding
+            return REDIRECT_CART_VIEW; // Redirect to the cart view page after adding
         } catch (Exception e) {
             logger.error("Error while adding item to the cart", e);
             model.addAttribute("error", "An error occurred while adding the item to the cart.");
-            return "redirect:/search/menu";  // Redirect back to the search page in case of an error
+            return REDIRECT_SEARCH_MENU;  // Redirect back to the search page in case of an error
         }
     }
 
@@ -68,10 +72,10 @@ public class CartController {
         try {
             logger.info("Removing item with ID {} from restaurant ID {} from the cart", menuItemId, restaurantId);
             cartService.removeFromCart(menuItemId, restaurantId);
-            return "redirect:/cart/view";  // Redirect to the cart view after successful removal
+            return REDIRECT_CART_VIEW;  // Redirect to the cart view after successful removal
         } catch (Exception e) {
             logger.error("Error while removing item from the cart", e);
-            return "redirect:/cart/view?error=Unable to remove item";  // Redirect with an error message
+            return REDIRECT_ERROR_VIEW;  // Redirect with an error message
         }
     }
 
@@ -87,11 +91,11 @@ public class CartController {
             logger.info("Clearing the cart");
             cartService.clearCart();
             model.addAttribute("message", "Cart cleared successfully.");
-            return "redirect:/cart/view";  // Redirect to the cart view after clearing the cart
+            return REDIRECT_CART_VIEW;  // Redirect to the cart view after clearing the cart
         } catch (Exception e) {
             logger.error("Error while clearing the cart", e);
             model.addAttribute("error", "An error occurred while clearing the cart.");
-            return "cart_view";  // Return the view in case of an error
+            return CART_VIEW;  // Return the view in case of an error
         }
     }
 
@@ -109,11 +113,11 @@ public class CartController {
             BigDecimal total = cartService.calculateTotal();
             model.addAttribute("cartItems", cartItems);
             model.addAttribute("total", total);
-            return "cart_view";  // Thymeleaf view for displaying cart items
+            return CART_VIEW;  // Thymeleaf view for displaying cart items
         } catch (Exception e) {
             logger.error("Error while viewing the cart", e);
             model.addAttribute("error", "An error occurred while fetching the cart items.");
-            return "cart_view";  // Return the view with an error message
+            return CART_VIEW;  // Return the view with an error message
         }
     }
 
@@ -130,11 +134,11 @@ public class CartController {
         try {
             logger.info("Incrementing quantity for menu item ID {} from restaurant ID {}", menuItemId, restaurantId);
             cartService.incrementQuantity(menuItemId, restaurantId);
-            return "redirect:/cart/view";  // Redirect to the cart view after incrementing quantity
+            return REDIRECT_CART_VIEW;  // Redirect to the cart view after incrementing quantity
         } catch (Exception e) {
             logger.error("Error while incrementing quantity for menu item ID {} from restaurant ID {}", menuItemId, restaurantId, e);
             model.addAttribute("error", "An error occurred while updating the quantity.");
-            return "cart_view";  // Return to cart view in case of an error
+            return CART_VIEW;  // Return to cart view in case of an error
         }
     }
 
@@ -151,11 +155,11 @@ public class CartController {
         try {
             logger.info("Decrementing quantity for menu item ID {} from restaurant ID {}", menuItemId, restaurantId);
             cartService.decrementQuantity(menuItemId, restaurantId);
-            return "redirect:/cart/view";  // Redirect to the cart view after decrementing quantity
+            return REDIRECT_CART_VIEW;  // Redirect to the cart view after decrementing quantity
         } catch (Exception e) {
             logger.error("Error while decrementing quantity for menu item ID {} from restaurant ID {}", menuItemId, restaurantId, e);
             model.addAttribute("error", "An error occurred while updating the quantity.");
-            return "cart_view";  // Return to cart view in case of an error
+            return CART_VIEW;  // Return to cart view in case of an error
         }
     }
 }

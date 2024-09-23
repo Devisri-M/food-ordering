@@ -27,6 +27,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RestaurantController {
 
   private static final Logger LOGGER = Logger.getLogger(RestaurantController.class.getName());
+  private static final String REDIRECT_RESTUARENTS = "redirect:/restaurants";
+  private static final String RESTUARENT_FORM = "restaurant_form";
+  private static final String RESTUARENTS = "restaurants";
 
   @Autowired
   private RestaurantService restaurantService;
@@ -62,7 +65,7 @@ public class RestaurantController {
       model.addAttribute("message", "Error retrieving restaurants: " + e.getMessage());
     }
 
-    return "restaurants";
+    return RESTUARENTS;
   }
 
   /**
@@ -80,7 +83,7 @@ public class RestaurantController {
     model.addAttribute("pageTitle", "Create new Restaurant");
     LOGGER.info("Displaying form to create a new restaurant");
 
-    return "restaurant_form";
+    return RESTUARENT_FORM;
   }
 
   /**
@@ -102,7 +105,7 @@ public class RestaurantController {
       redirectAttributes.addFlashAttribute("message", "Error saving restaurant: " + e.getMessage());
     }
 
-    return "redirect:/restaurants";
+    return REDIRECT_RESTUARENTS;
   }
 
   /**
@@ -121,15 +124,15 @@ public class RestaurantController {
         model.addAttribute("restaurant", restaurantOpt.get());
         model.addAttribute("pageTitle", "Edit Restaurant (ID: " + id + ")");
         LOGGER.info("Displaying form to edit restaurant ID: " + id);
-        return "restaurant_form";
+        return RESTUARENT_FORM;
       } else {
         redirectAttributes.addFlashAttribute("message", "Restaurant not found.");
-        return "redirect:/restaurants";
+        return REDIRECT_RESTUARENTS;
       }
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, "Error retrieving restaurant for editing", e);
       redirectAttributes.addFlashAttribute("message", "Error retrieving restaurant: " + e.getMessage());
-      return "redirect:/restaurants";
+      return REDIRECT_RESTUARENTS;
     }
   }
 
@@ -151,7 +154,7 @@ public class RestaurantController {
       redirectAttributes.addFlashAttribute("message", "Error deleting restaurant: " + e.getMessage());
     }
 
-    return "redirect:/restaurants";
+    return REDIRECT_RESTUARENTS;
   }
 
   /**
@@ -175,6 +178,6 @@ public class RestaurantController {
       redirectAttributes.addFlashAttribute("message", "Error updating restaurant status: " + e.getMessage());
     }
 
-    return "redirect:/restaurants";
+    return REDIRECT_RESTUARENTS;
   }
 }

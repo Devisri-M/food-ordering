@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SearchController {
 
     private static final Logger LOGGER = Logger.getLogger(SearchController.class.getName());
+    private static final String ERROR = "error";
+    private static final String SEARCH_RESULTS = "search_results";
 
     @Autowired
     private MenuService menuService;
@@ -74,7 +76,7 @@ public class SearchController {
             if (menuItems.isEmpty()) {
                 LOGGER.warning("No items found for keyword: " + keyword);
                 model.addAttribute("message", "No restaurants found offering the item: " + keyword);
-                return "search_results";  // Display a message to the user
+                return SEARCH_RESULTS;  // Display a message to the user
             }
 
             // Find restaurants associated with these menu items
@@ -83,7 +85,7 @@ public class SearchController {
             if (restaurants.isEmpty()) {
                 LOGGER.warning("No restaurants found for the given menu items.");
                 model.addAttribute("message", "No restaurants found for the item: " + keyword);
-                return "search_results";  // No restaurants found
+                return SEARCH_RESULTS;  // No restaurants found
             }
 
             // Filter each restaurant's menu items to include only those that match the keyword
@@ -103,7 +105,7 @@ public class SearchController {
             if (filteredRestaurants.isEmpty()) {
                 LOGGER.warning("No matching menu items found for keyword: " + keyword);
                 model.addAttribute("message", "No restaurants found offering the item: " + keyword);
-                return "search_results";
+                return SEARCH_RESULTS;
             }
 
             // Sort restaurants based on the user's selection (price or rating)
@@ -125,12 +127,12 @@ public class SearchController {
             // Add the filtered restaurants and keyword to the model
             model.addAttribute("restaurants", filteredRestaurants);
             model.addAttribute("keyword", keyword);
-            return "search_results";  // Display the search results in Thymeleaf
+            return SEARCH_RESULTS;  // Display the search results in Thymeleaf
 
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error while searching for restaurants offering the item: " + keyword, e);
             model.addAttribute("message", "An error occurred while searching for restaurants.");
-            return "error";  // Return an error page in case of failure
+            return ERROR;  // Return an error page in case of failure
         }
     }
 }
