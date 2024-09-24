@@ -24,20 +24,19 @@ public class OrderItemRequest {
      * Validates that the price and quantity are valid values.
      *
      * @param name the name of the menu item
-     * @param price the price of the menu item
      * @param quantity the quantity of the menu item
      */
-    public OrderItemRequest(String name, BigDecimal price, int quantity) {
-        if (price.compareTo(BigDecimal.ZERO) < 0) {
-            logger.error("Invalid price: {}", price);
-            throw new IllegalArgumentException("Price must be non-negative.");
-        }
+    public OrderItemRequest(String name, int quantity) {
+//        if (price.compareTo(BigDecimal.ZERO) < 0) {
+//            logger.error("Invalid price: {}", price);
+//            throw new IllegalArgumentException("Price must be non-negative.");
+//        }
         if (quantity < 1) {
             logger.error("Invalid quantity: {}", quantity);
             throw new IllegalArgumentException("Quantity must be at least 1.");
         }
         this.name = name;
-        this.price = price;
+//        this.price = price;
         this.quantity = quantity;
         logger.info("Created order item request: {}", this);
     }
@@ -80,21 +79,21 @@ public class OrderItemRequest {
         this.quantity = quantity;
     }
 
-    /**
-     * Method to calculate the total price for this item (price * quantity).
-     *
-     * @return the total price as a BigDecimal
-     */
-    public BigDecimal getTotalPrice() {
-        try {
-            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
-            logger.info("Total price for order item {}: {}", name, totalPrice);
-            return totalPrice;
-        } catch (Exception e) {
-            logger.error("Error calculating total price for order item {}: {}", name, e.getMessage());
-            throw new RuntimeException("Failed to calculate total price.", e);
-        }
-    }
+//    /**
+//     * Method to calculate the total price for this item (price * quantity).
+//     *
+//     * @return the total price as a BigDecimal
+//     */
+//    public BigDecimal getTotalPrice() {
+//        try {
+//            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
+//            logger.info("Total price for order item {}: {}", name, totalPrice);
+//            return totalPrice;
+//        } catch (Exception e) {
+//            logger.error("Error calculating total price for order item {}: {}", name, e.getMessage());
+//            throw new RuntimeException("Failed to calculate total price.", e);
+//        }
+//    }
 
     public Long getMenuItemId() {
         return menuItemId;

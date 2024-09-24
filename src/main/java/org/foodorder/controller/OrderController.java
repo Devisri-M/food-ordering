@@ -8,6 +8,7 @@ import org.foodorder.service.OrderService;
 import org.foodorder.service.RestaurantSelectorService;
 import org.foodorder.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -195,7 +196,7 @@ public class OrderController {
         try {
             // Validate input
             if (orderRequest.getItems().isEmpty()) {
-                return ResponseEntity.badRequest().body("No items provided for order placement.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No items provided for order placement.");
             }
 
             Long customerId = orderRequest.getCustomerId();
@@ -214,10 +215,10 @@ public class OrderController {
         } catch (ExecutionException | InterruptedException e) {
             Thread.currentThread().interrupt(); // Preserve interrupt status
             LOGGER.log(Level.SEVERE, "Failed to place order", e);
-            return ResponseEntity.status(500).body(Map.of("message", "Failed to place order: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Failed to place order: " + e.getMessage()));
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error occurred while placing the order", e);
-            return ResponseEntity.status(500).body(Map.of("message", "Failed to place order: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Failed to place order: " + e.getMessage()));
         }
     }
 

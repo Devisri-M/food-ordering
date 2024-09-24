@@ -231,6 +231,7 @@ public class OrderServiceImpl implements OrderService {
                 // Group items by restaurant
                 Map<Long, List<OrderItemRequest>> groupedItems = restaurantSelectorService.groupItemsByRestaurant(items, strategy);
 
+                LOGGER.info("-------GROUPED ITEMS: {0}---------", groupedItems);
                 for (Map.Entry<Long, List<OrderItemRequest>> entry : groupedItems.entrySet()) {
                     Long restaurantId = entry.getKey();
                     List<OrderItemRequest> restaurantItems = entry.getValue();

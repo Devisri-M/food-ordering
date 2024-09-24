@@ -125,6 +125,8 @@ public class RestaurantSelectorServiceImpl implements RestaurantSelectorService 
 
             // Set the menuItemId in the OrderItemRequest
             item.setMenuItemId(selectedMenuItem.getId());
+            logger.info("-------selected item ----" + selectedMenuItem.getPrice());
+            item.setPrice(selectedMenuItem.getPrice());
             // Group items by the selected restaurant
             groupedItems.computeIfAbsent(selectedRestaurant.getId(), k -> new ArrayList<>()).add(item);
         }
